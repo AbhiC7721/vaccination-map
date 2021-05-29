@@ -23,7 +23,7 @@ function App() {
 
   const prepareData = (data) => {
     let vaccinations = []
-    Object.values(data).map((obj) => {
+    Object.values(data).forEach((obj) => {
       if(obj.total_vaccinations){
         vaccinations.push(parseInt(obj.total_vaccinations))
       }
@@ -33,7 +33,7 @@ function App() {
     let secondq = vaccinations[Math.floor(vaccinations.length/2)]
     let thirdq = vaccinations[Math.floor(vaccinations.length*3/4)]
 
-    Object.values(data).map((obj) => {
+    Object.values(data).forEach((obj) => {
       if(!obj.total_vaccinations){
         obj.size = 0
       }
@@ -54,27 +54,31 @@ function App() {
     setDataCountries(data)
   }
 
-  useEffect(async() => {
+  useEffect(() => {
+    async function fetchData() 
+    {
     let full_data =  {}
 
     let res_items = await Promise.all([ fetch(url_cases), fetch(url_vaccinations) ])
 
     let data_cases = await res_items[0].json()
-    data_cases.map((item) => {
+    data_cases.forEach((item) => {
       const {country, countryInfo, cases, deaths, population} = item
 
       full_data[country] = {country, countryInfo, cases, deaths, population}
     })
 
     let data_vaccinations = await res_items[1].json()
-    data_vaccinations.map((item, index) => {
+    data_vaccinations.forEach((item, index) => {
      if(full_data[item.country]){
        full_data[item.country]['total_vaccinations'] = Object.values(item.timeline)[0]
      }
     })
 
     prepareData(full_data)
-  }, [])
+    }
+    fetchData();
+  }, []);
   
 
   return (
@@ -116,7 +120,7 @@ function App() {
         >
             <div className="tooltip-card">
               <div className="tooltip-header">
-                <img className="tooltip-img" src={tooltipData.countryInfo.flag}></img>
+                <img className="tooltip-img" alt="tool-img " src={tooltipData.countryInfo.flag}></img>
                 {tooltipData.country}
               </div>
               <div className="tooltip-content">
