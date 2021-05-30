@@ -89,6 +89,9 @@ function App() {
           <h6 className="mx-auto navbar-brand">
             Global Vaccination Tracker
           </h6>
+          <div className="ml-auto">
+          <button type="button" className="btn btn-primary btn-lg"><a href="https://cofighthackon.netlify.app/">Home</a></button>
+          </div>
         </div>
       </div>
     </div>

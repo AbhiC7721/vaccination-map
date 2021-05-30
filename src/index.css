@@ -61,3 +61,8 @@ body {
   height: 100vh;
   width: 100vw;
 }
+
+a:link, a:visited {
+  text-decoration: none;
+  color: white;
+}
